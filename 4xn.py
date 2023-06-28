@@ -113,6 +113,6 @@ def plot_all():
         ax.set(xlabel='x-label', ylabel='y-label')
     for ax in axs.flat:
         ax.label_outer()
-    plt.savefig("all_indices.png")
+    plt.savefig("all_indices.png", dpi=300)
 
 plot_all()
