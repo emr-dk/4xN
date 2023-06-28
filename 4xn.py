@@ -2,6 +2,7 @@ import rasterio as io
 import os
 import fnmatch
 import numpy as np
+from matplotlib import pyplot as plt
 
 CURR_DIR = os.getcwd()
 
@@ -52,17 +53,16 @@ def output_sensor_array(wanted_band: str):
         else:
             print("Band not found")
 
-def ndvi():
+def ndvi_calc():
     '''
     NDVI = (NIR - RED) / (NIR + RED)
     '''
     red = output_sensor_array("red")
     nir = output_sensor_array("nir")
     ndvi = np.divide(np.subtract(nir,red),np.add(nir,red))
-
     return ndvi
 
-def ndbi(nir, swir):
+def ndbi_calc():
     '''
     NDBI = (SWIR - NIR) / (SWIR + NIR) 
     '''
@@ -72,7 +72,7 @@ def ndbi(nir, swir):
 
     return ndbi
 
-def ndwi(green, nir):
+def ndwi_calc():
     '''
     NDWI = (GREEN - NIR) / (GREEN + NIR)
     '''
@@ -82,7 +82,7 @@ def ndwi(green, nir):
 
     return ndwi
 
-def ndmi(nir, mir):
+def ndmi_calc():
     '''
     NDMI = (NIR - MIR) / (NIR + MIR)
     '''
@@ -91,3 +91,28 @@ def ndmi(nir, mir):
     ndmi = np.divide(np.subtract(nir,mir),np.add(nir,mir))
 
     return ndmi
+
+def plot_all():
+    '''
+    Plot all the indices
+    '''
+    ndvi = ndvi_calc()
+    ndbi = ndbi_calc()
+    ndwi = ndwi_calc()
+    ndmi = ndmi_calc()
+    fig, axs = plt.subplots(2, 2)
+    axs[0, 0].imshow(ndvi, cmap='RdYlGn')
+    axs[0, 0].set_title('NDVI')
+    axs[0, 1].imshow(ndbi, cmap='RdYlGn')
+    axs[0, 1].set_title('NDBI')
+    axs[1, 0].imshow(ndwi, cmap='RdYlGn')
+    axs[1, 0].set_title('NDWI')
+    axs[1, 1].imshow(ndmi, cmap='RdYlGn')
+    axs[1, 1].set_title('NDMI')
+    for ax in axs.flat:
+        ax.set(xlabel='x-label', ylabel='y-label')
+    for ax in axs.flat:
+        ax.label_outer()
+    plt.savefig("all_indices.png")
+
+plot_all()
