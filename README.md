@@ -1,4 +1,6 @@
-# 4xN
+# 4xN (Four different normalised indices)
+![image of four indices](https://github.com/emr-dk/4xN/blob/main/all_indices.png?raw=true)
+
 Just a quick example of four different analyses based on satellite imagery. These are commonly and easily used to analyse vegetation, water and urban areas.
 
 The analyses will be as follows: 
